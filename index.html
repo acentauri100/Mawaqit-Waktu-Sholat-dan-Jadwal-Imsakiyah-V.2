@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mawaqit, Waktu Sholat dan Jadwal Imsakiyah Kontemporer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&family=Mulish:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --bg:#F6F1E4;
+  --paper:#FBF7EC;
+  --deep:#0B3B2E;
+  --deep2:#0E4A38;
+  --teal:#114F49;
+  --gold:#C8992A;
+  --gold-light:#E7C45F;
+  --gold-pale:#F1DFA6;
+  --ink:#202B22;
+  --ink-soft:#4B5A4E;
+  --maroon:#7A2A2A;
+  --line:#D8C79A;
+  --shadow: 0 10px 30px -12px rgba(11,59,46,.35);
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(200,153,42,0.07) 0, rgba(200,153,42,0.07) 1px, transparent 1px),
+    repeating-linear-gradient(45deg, rgba(11,59,46,0.035) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(-45deg, rgba(11,59,46,0.035) 0 1px, transparent 1px 26px);
+  background-size: 26px 26px, 52px 52px, 52px 52px;
+  color:var(--ink);
+  font-family:'Mulish',sans-serif;
+  line-height:1.55;
+}
+a{color:var(--teal);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  background:
+    radial-gradient(120% 140% at 50% -20%, rgba(231,196,95,.25), transparent 60%),
+    linear-gradient(180deg, var(--deep) 0%, var(--deep2) 55%, var(--teal) 100%);
+  color:#F6EFD8;
+  padding:64px 20px 90px;
+  overflow:hidden;
+  border-bottom:6px solid var(--gold);
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: var(--star-pattern);
+  background-size: 90px 90px;
+  opacity:.12;
+  pointer-events:none;
+}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:2;text-align:center;}
+.eyebrow{
+  font-family:'Cairo',sans-serif;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:12.5px;
+  color:var(--gold-light);
+  font-weight:700;
+}
+.hero h1{
+  font-family:'Amiri',serif;
+  font-size:clamp(34px,5.2vw,58px);
+  margin:14px 0 6px;
+  font-weight:700;
+  text-shadow:0 4px 22px rgba(0,0,0,.25);
+}
+.hero .sub-ar{
+  font-family:'Amiri',serif;
+  font-size:22px;
+  color:var(--gold-light);
+  direction:rtl;
+  margin-bottom:10px;
+}
+.hero p.lead{
+  max-width:680px;margin:0 auto;
+  color:#E3DDC4;
+  font-size:16px;
+}
+.arch{
+  width:120px;height:160px;margin:26px auto 0;
+  border:2px solid var(--gold);
+  border-bottom:none;
+  border-top-left-radius:60px;
+  border-top-right-radius:60px;
+  position:relative;
+  display:flex;align-items:flex-end;justify-content:center;
+  background:linear-gradient(180deg, rgba(231,196,95,.15), transparent 70%);
+}
+.arch::after{
+  content:"☽";
+  font-size:34px;color:var(--gold-light);margin-bottom:14px;
+}
+
+/* ---------- SECTION SHELLS ---------- */
+.section{margin-top:46px;}
+.section-head{
+  display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.section-head .num{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--gold);
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex:none;
+}
+.section-head h2{
+  font-family:'Amiri',serif;
+  font-size:26px;
+  color:var(--deep);
+  margin:0;
+}
+.section-head .divider{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+
+.card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:26px;
+}
+
+/* ---------- EDUCATION ACCORDION ---------- */
+.edu-grid{display:grid;gap:14px;}
+details.edu{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+details.edu>summary{
+  cursor:pointer;
+  list-style:none;
+  padding:16px 20px;
+  display:flex;align-items:center;gap:12px;
+  font-family:'Cairo',sans-serif;
+  font-weight:700;
+  color:var(--deep);
+  font-size:15.5px;
+  background:linear-gradient(90deg, var(--gold-pale), transparent 70%);
+}
+details.edu>summary::-webkit-details-marker{display:none;}
+details.edu>summary::before{
+  content:"✦";color:var(--gold);font-size:13px;flex:none;
+}
+details.edu>summary .arrow{margin-left:auto;color:var(--ink-soft);transition:transform .2s;font-size:13px;}
+details.edu[open]>summary .arrow{transform:rotate(90deg);}
+.edu-body{padding:6px 24px 22px;font-size:15px;color:var(--ink);}
+.edu-body h4{
+  font-family:'Cairo',sans-serif;
+  color:var(--maroon);
+  font-size:14.5px;
+  margin:18px 0 6px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+.edu-body p{margin:6px 0 10px;}
+.edu-body ul{margin:6px 0 12px;padding-left:20px;}
+.edu-body li{margin-bottom:6px;}
+.ar-quote{
+  font-family:'Amiri',serif;
+  direction:rtl;
+  font-size:19px;
+  color:var(--deep);
+  background:var(--gold-pale);
+  border-right:4px solid var(--gold);
+  padding:10px 16px;
+  border-radius:6px;
+  margin:10px 0;
+}
+.note-box{
+  background:#EFE6CE;
+  border-left:4px solid var(--gold);
+  padding:10px 14px;
+  border-radius:6px;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-top:10px;
+}
+
+/* ---------- FORM ---------- */
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:18px 20px;
+}
+.field label{
+  display:block;font-size:12.5px;font-weight:700;
+  color:var(--deep);text-transform:uppercase;letter-spacing:.04em;
+  margin-bottom:6px;
+}
+.field input, .field select{
+  width:100%;padding:11px 12px;
+  border:1.5px solid var(--line);border-radius:9px;
+  background:#fff;
+  font-family:'JetBrains Mono',monospace;
+  font-size:14.5px;color:var(--ink);
+}
+.field select{font-family:'Mulish',sans-serif;}
+.field input:focus, .field select:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+.field .hint{font-size:12px;color:var(--ink-soft);margin-top:4px;font-family:'Mulish',sans-serif;}
+.mode-toggle{
+  display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;
+}
+.mode-btn{
+  flex:1;min-width:200px;
+  padding:14px 16px;border-radius:11px;border:1.5px solid var(--line);
+  background:#fff;cursor:pointer;text-align:left;
+  font-family:'Cairo',sans-serif;font-weight:700;color:var(--ink-soft);
+  transition:.15s;
+}
+.mode-btn small{display:block;font-weight:500;font-size:12px;margin-top:3px;font-family:'Mulish',sans-serif;}
+.mode-btn.active{
+  border-color:var(--gold);background:linear-gradient(135deg,var(--deep),var(--teal));color:#F6EFD8;
+  box-shadow:var(--shadow);
+}
+.mode-btn.active small{color:var(--gold-light);}
+.btn-primary{
+  margin-top:22px;
+  width:100%;padding:15px;border:none;border-radius:11px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--deep);font-family:'Cairo',sans-serif;font-weight:800;font-size:15.5px;
+  cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 10px 24px -8px rgba(200,153,42,.55);
+}
+.btn-primary:hover{filter:brightness(1.04);}
+.hidden{display:none !important;}
+
+/* ---------- SECTION COLLAPSE TOGGLE ---------- */
+.section-toggle-btn{
+  margin-left:auto;flex:none;
+  display:flex;align-items:center;gap:6px;
+  background:var(--paper);border:1.5px solid var(--gold);
+  color:var(--deep);font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;
+  padding:8px 14px;border-radius:20px;cursor:pointer;
+}
+.section-toggle-btn .chev{transition:transform .25s;font-size:11px;}
+.section-toggle-btn.collapsed .chev{transform:rotate(-90deg);}
+.edu-grid.collapsed{display:none;}
+
+/* ---------- DMS COORDINATE INPUT ---------- */
+.gps-btn{
+  width:100%;padding:12px 14px;
+  background:linear-gradient(135deg,#0B6E4F,#11805A);
+  color:#F6EFD8;border:none;border-radius:10px;
+  font-family:'Cairo',sans-serif;font-weight:700;font-size:14.5px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
+  margin-bottom:16px;
+  box-shadow:0 6px 18px -6px rgba(11,110,79,.45);
+}
+.gps-btn:hover{filter:brightness(1.08);}
+.gps-btn:disabled{opacity:.55;cursor:not-allowed;}
+.gps-status{
+  font-size:12.5px;margin-top:6px;padding:8px 12px;border-radius:8px;
+  display:none;font-family:'Mulish',sans-serif;
+}
+.gps-status.ok{background:#E0F4EC;color:#0B5E35;border:1px solid #A5DFC3;}
+.gps-status.err{background:#FDE8E8;color:#7A1B1B;border:1px solid #F5A4A4;}
+.gps-status.loading{background:#FFF8E6;color:#6B4A00;border:1px solid #F0D080;}
+.dms-group input{width:100%;text-align:center;padding:11px 6px;}
+.dms-group select{
+  flex:none;width:62px;padding:11px 4px;
+  border:1.5px solid var(--line);border-radius:9px;background:#fff;
+  font-family:'Cairo',sans-serif;font-weight:700;color:var(--deep);
+}
+.dms-group .unit{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink-soft);font-size:12px;flex:none;width:14px;
+}
+.field-wide{grid-column:span 2;}
+
+/* ---------- EXPORT BUTTON ---------- */
+.export-bar{display:flex;justify-content:flex-end;margin-top:14px;}
+.btn-export{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#1D6E4F,#0B3B2E);
+  color:#F6EFD8;border:none;border-radius:10px;
+  padding:11px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;box-shadow:var(--shadow);
+}
+.btn-export:hover{filter:brightness(1.08);}
+
+/* ---------- RESULT META ---------- */
+.meta-strip{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;margin:22px 0;
+}
+.meta-chip{
+  background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;
+}
+.meta-chip .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700;}
+.meta-chip .v{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--deep);font-weight:700;margin-top:2px;}
+
+/* ---------- TABLE ---------- */
+.table-frame{
+  position:relative;
+  border:2px solid var(--gold);
+  border-radius:16px;
+  padding:4px;
+  background:var(--paper);
+  box-shadow:var(--shadow);
+}
+.table-frame::before, .table-frame::after,
+.table-frame .corner-tl, .table-frame .corner-tr, .table-frame .corner-bl, .table-frame .corner-br{
+  content:"✦";position:absolute;color:var(--gold);font-size:14px;
+}
+.corner-tl{top:-9px;left:-9px;} .corner-tr{top:-9px;right:-9px;}
+.corner-bl{bottom:-9px;left:-9px;} .corner-br{bottom:-9px;right:-9px;}
+.table-scroll{overflow-x:auto;border-radius:12px;}
+table.sholat{
+  width:100%;border-collapse:collapse;min-width:920px;
+  font-family:'JetBrains Mono',monospace;font-size:13.2px;
+}
+table.sholat thead th{
+  background:linear-gradient(180deg,var(--deep),var(--teal));
+  color:#F6EFD8;font-family:'Cairo',sans-serif;font-weight:700;
+  padding:11px 8px;text-align:center;font-size:12px;letter-spacing:.02em;
+  position:sticky;top:0;
+}
+table.sholat tbody td{
+  padding:8px 8px;text-align:center;border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+table.sholat tbody td.daycell{font-family:'Mulish',sans-serif;font-weight:700;text-align:left;color:var(--deep);}
+table.sholat tbody td.hijricell{font-family:'Mulish',sans-serif;font-size:11.5px;color:var(--ink-soft);text-align:left;}
+table.sholat tbody tr:nth-child(even){background:#F1E9D2;}
+table.sholat tbody tr.friday{background:#EADFB8 !important;}
+table.sholat tbody tr.ramadan-row td.daycell{color:var(--maroon);}
+table.sholat tbody tr:hover{background:var(--gold-pale) !important;}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--ink-soft);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+.foot-note{
+  margin-top:22px;background:var(--paper);border:1px dashed var(--line);
+  border-radius:12px;padding:18px 20px;font-size:13.5px;color:var(--ink-soft);
+}
+.foot-note h4{margin:0 0 8px;color:var(--deep);font-family:'Cairo',sans-serif;}
+.foot-note ul{margin:6px 0;padding-left:18px;}
+
+footer{
+  text-align:center;margin-top:70px;padding:26px 20px;
+  color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line);
+}
+footer .ar{font-family:'Amiri',serif;font-size:18px;color:var(--deep);margin-bottom:6px;direction:rtl;}
+
+@media print{
+  .hero, .edu-grid, .card.form-card, footer{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Kalkulator Hisab &middot; Metode Kementerian Agama RI</div>
+    <h1>Mawaqit, Waktu Sholat dan Jadwal Imsakiyah Kontemporer</h1>
+    <div class="sub-ar">مواقيت الصلاة وجدول الإمساكية</div>
+    <p class="lead">Hitung waktu sholat lima waktu, imsak, terbit, dan dhuha berdasarkan posisi matahari (hisab) sesuai kriteria sudut yang digunakan Kementerian Agama RI — lengkap dengan jadwal imsakiyah Ramadan tahunan, konversi kalender Hijriyah–Masehi, dan bekal ilmu seputar waktu sholat.</p>
+    <div class="arch"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ EDUCATION SECTION ============ -->
+  <div class="section" id="edukasi">
+    <div class="section-head">
+      <div class="num">۱</div><h2>Bekal Ilmu: Mengenal Waktu Sholat</h2><div class="divider"></div>
+      <button type="button" class="section-toggle-btn" id="eduToggleBtn" onclick="toggleEdu()">
+        <span class="chev">▾</span> <span id="eduToggleLabel">Sembunyikan</span>
+      </button>
+    </div>
+
+    <div class="edu-grid" id="eduGrid">
+
+      <details class="edu">
+        <summary>Dalil Al-Qur'an tentang Waktu Sholat <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <p>Al-Qur'an menegaskan bahwa sholat adalah ibadah yang waktunya telah ditetapkan, bukan sesuatu yang dilakukan sembarang waktu. Para ulama tafsir klasik (Ath-Thabari, Al-Qurthubi, Ibnu Katsir) maupun kontemporer merujuk pada sejumlah ayat berikut sebagai dasar pembagian lima waktu sholat.</p>
+
+          <h4>QS. An-Nisa' (4): 103</h4>
+          <p>Ayat ini menjelaskan bahwa sholat telah diwajibkan atas orang-orang yang beriman dengan waktu-waktu yang sudah ditentukan (mawqūtan). Ibnu Katsir dan Al-Qurthubi menjelaskan istilah "kitāban mawqūtan" sebagai penegasan bahwa sholat wajib terikat pada waktu yang baku dan tidak boleh ditunda-tunda sekehendak hati, berbeda dengan ibadah sunnah seperti dzikir atau doa yang waktunya lebih lentur.</p>
+
+          <h4>QS. Al-Isra' (17): 78</h4>
+          <p>Ayat ini menyebut rentang dari condongnya matahari (dulūki asy-syams) hingga gelapnya malam (ghasaqil lail) sebagai cakupan waktu beberapa sholat, lalu secara khusus menyinggung "qur'ānal fajr" yang oleh mayoritas mufassir dipahami sebagai sholat Subuh. Ibnu Abbas dan sejumlah sahabat menafsirkan "dulūki asy-syams" sebagai permulaan condongnya matahari (masuknya Dzuhur), sementara "ghasaqil lail" ditafsirkan sebagai masuknya waktu Isya — sehingga satu ayat ini sering dijadikan dalil gabungan untuk empat waktu (Dzuhur, Ashar, Maghrib, Isya), dengan frasa terakhir menjadi dalil tersendiri bagi Subuh.</p>
+
+          <h4>QS. Al-Baqarah (2): 187</h4>
+          <p>Ayat tentang puasa ini menyebut batas akhir sahur dengan ungkapan "hingga jelas bagimu benang putih dari benang hitam di waktu fajar" (al-khaiṭ al-abyaḍ minal khaiṭ al-aswad minal fajr). Frasa inilah yang oleh para ulama fikih dijadikan definisi tekstual fajar shadiq — dasar langsung dari Al-Qur'an bagi batas mulainya puasa, yang kemudian beriringan dengan batas akhir imsak dan awal waktu Subuh, sebelum akhirnya diterjemahkan ke dalam sudut matahari dalam ilmu hisab modern.</p>
+
+          <h4>QS. Hud (11): 114</h4>
+          <p>Ayat ini menyebut pelaksanaan sholat pada dua ujung siang (ṭarafayin nahār) serta sebagian dari malam (zulafan minal lail). Ath-Thabari dalam tafsirnya mengaitkan "dua ujung siang" dengan Subuh di satu sisi serta Dzuhur/Ashar di sisi lain, sedangkan "sebagian dari malam" merujuk pada Maghrib dan Isya — menjadikan ayat ini salah satu rujukan paling awal bagi pembagian waktu sholat dalam sehari.</p>
+
+          <h4>QS. Al-Baqarah (2): 238</h4>
+          <p>Memerintahkan untuk senantiasa menjaga seluruh sholat, dengan penekanan khusus pada satu sholat yang disebut "pertengahan" (aṣ-ṣalāt al-wusṭā). Penafsiran istilah ini diperselisihkan ulama tafsir: riwayat dari Ali bin Abi Thalib dan Ibnu Mas'ud menetapkannya sebagai Ashar (pendapat mayoritas, termasuk yang dipegang Imam Syafi'i dan Ahmad bin Hanbal), sementara sebagian riwayat lain menyebut Subuh atau Dzuhur. Perbedaan inilah yang menjadi salah satu alasan mengapa Ashar dan Subuh kerap disebut sebagai dua waktu yang paling rawan terlewat sehingga memerlukan perhatian ekstra dalam fikih.</p>
+
+          <h4>QS. Taha (20): 130 &amp; QS. Ar-Rum (30): 17–18</h4>
+          <p>Kedua ayat ini menyebut tasbih pada waktu sebelum terbit matahari, sebelum terbenamnya, pada sebagian malam, serta pada petang dan tengah hari. Meski lafalnya berupa perintah tasbih (bertasbih/mensucikan Allah) bukan kata "sholat" secara eksplisit, sejumlah mufassir — termasuk dalam tafsir-tafsir kontemporer — menjadikannya dalil pendukung (bukan dalil utama) bagi pembagian lima waktu sholat, karena rentang waktu yang disebut sejalan dengan pola lima waktu yang sudah ditetapkan dalil-dalil lain yang lebih tegas.</p>
+
+          <h4>QS. An-Nur (24): 58</h4>
+          <p>Ayat ini menyebut tiga waktu privasi dalam rumah tangga: sebelum sholat Subuh, tengah hari (saat melepas pakaian untuk istirahat), dan setelah sholat Isya. Para mufassir menjadikan ayat ini sebagai gambaran tidak langsung mengenai tiga titik pembagian besar dalam sehari (pagi, siang, malam) yang juga relevan dengan logika pembagian waktu sholat lima waktu.</p>
+
+          <div class="note-box">Catatan metodologis: penentuan batas jam yang presisi (derajat posisi matahari) tidak berasal langsung dari teks ayat-ayat di atas, melainkan hasil ijtihad fikih-astronomis (hisab) yang menafsirkan fenomena alam yang disebut Al-Qur'an (tergelincir, gelap, fajr, benang putih-hitam) ke dalam ukuran sudut matahari yang dapat dihitung secara matematis di mana pun di permukaan bumi.</div>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Hadis tentang Waktu Sholat <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <h4>Hadis Jibril mengajarkan waktu sholat (HR. Abu Dawud no. 393; At-Tirmidzi no. 149)</h4>
+          <p>Diriwayatkan bahwa Malaikat Jibril datang kepada Nabi ﷺ pada dua hari berturut-turut dan mengerjakan sholat bersama beliau: pada hari pertama di awal-awal setiap waktu, dan pada hari kedua di akhir-akhir waktu yang sama, lalu Jibril bersabda bahwa waktu sholat berada di antara dua waktu tersebut. Hadis ini menjadi penjelas praktik (bayān bil-fi'l) yang melengkapi ayat-ayat Al-Qur'an yang sifatnya umum, sekaligus dalil utama bahwa setiap sholat memiliki rentang awal dan akhir, bukan satu titik waktu tunggal.</p>
+
+          <h4>Hadis batas waktu setiap sholat (HR. Muslim no. 612, dari Abdullah bin Amr bin al-Ash)</h4>
+          <p>Hadis ini secara rinci menyebutkan rentang masing-masing waktu: Dzuhur dimulai sejak matahari tergelincir hingga menjelang masuk Ashar; Ashar berakhir sebelum matahari menguning/mendekati terbenam; Maghrib berlangsung selama mega merah (syafaq) belum hilang; Isya hingga pertengahan malam; dan Subuh sejak terbit fajar hingga sebelum matahari terbit. Imam An-Nawawi dalam Syarah Shahih Muslim menjadikan hadis ini sebagai rujukan paling rinci dalam pembahasan batas waktu sholat di kalangan fikih Syafi'iyah.</p>
+
+          <h4>Hadis fajar shadiq dan fajar kazib (HR. Muslim no. 1093, dari Sammurah bin Jundub)</h4>
+          <p>Hadis ini menjelaskan dua jenis cahaya pagi: cahaya yang naik vertikal menyerupai ekor serigala (fajar kazib, belum menjadi batas hukum apa pun) dan cahaya yang melebar horizontal di ufuk timur (fajar shadiq, batas mulainya puasa dan waktu Subuh). Hadis ini menjadi dasar tekstual utama definisi astronomis fajar shadiq, yang kemudian diterjemahkan ulama hisab modern menjadi sudut kedalaman matahari di bawah ufuk (umumnya berkisar -18° hingga -20°).</p>
+
+          <h4>Hadis "abridu bish-shalah" — kelonggaran mengakhirkan Dzuhur saat panas (HR. Bukhari no. 539, dari Abu Dzar)</h4>
+          <p>Nabi ﷺ memerintahkan untuk sedikit mengakhirkan sholat Dzuhur pada cuaca sangat panas agar jamaah tidak kepayahan berjalan ke masjid. Hadis ini menjadi dalil bahwa kelonggaran praktik (rukhsah) dapat berlaku dalam pelaksanaan tanpa mengubah batas syar'i waktu itu sendiri — prinsip yang relevan dengan diskusi ihtiyat pada hisab modern.</p>
+
+          <h4>Hadis kelonggaran mengakhirkan Isya (HR. Bukhari no. 569; Muslim no. 638)</h4>
+          <p>Pada suatu malam Nabi ﷺ mengakhirkan sholat Isya hingga larut, kemudian bersabda bahwa seandainya tidak memberatkan umatnya, beliau akan menjadikan waktu tersebut sebagai kebiasaan. Hadis ini menjadi dalil utama bagi ulama yang membolehkan mengakhirkan Isya hingga sepertiga atau bahkan separuh malam, dan menjadi rujukan ketika membahas batas akhir Isya yang diperselisihkan ulama.</p>
+
+          <h4>Hadis ancaman meninggalkan waktu Ashar (HR. Bukhari no. 553; Muslim no. 626)</h4>
+          <p>Nabi ﷺ menyebut siapa yang melewatkan sholat Ashar hingga habis waktunya, seolah telah kehilangan keluarga dan hartanya sekaligus — penekanan keras yang menjadi salah satu alasan ulama sangat berhati-hati dalam menetapkan batas akhir Ashar, termasuk dalam perdebatan mazhab tentang faktor bayangan (lihat bagian Fikih).</p>
+
+          <div class="note-box">Hadis-hadis ini menjadi fondasi seluruh kajian fikih waktu sholat; ilmu hisab modern pada dasarnya adalah upaya menerjemahkan fenomena alam yang disebutkan hadis (fajar shadiq-kazib, tergelincir, syafaq, tengah malam) ke dalam parameter astronomis yang dapat dihitung di mana saja di bumi tanpa harus menunggu pengamatan visual langsung setiap hari.</div>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Fikih Waktu Sholat &amp; Perbedaan Mazhab <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <h4>Subuh (Fajr Shadiq)</h4>
+          <p>Dimulai saat cahaya putih memanjang horizontal di ufuk timur (fajar shadiq, bukan fajar kazib yang vertikal — lihat hadis Sammurah bin Jundub pada bagian Hadis), berakhir saat matahari mulai terbit. Pembahasan rinci kriteria fajar shadiq dapat ditemukan dalam <em>Al-Majmu' Syarh al-Muhadzdzab</em> karya Imam An-Nawawi (Syafi'i) dan <em>Al-Mughni</em> karya Ibnu Qudamah (Hambali). Dalam hisab modern, fajar shadiq diwakili dengan kedalaman matahari di bawah ufuk; Kemenag RI menggunakan kriteria -20° sebagai bentuk kehati-hatian, sementara beberapa lembaga lain memakai -18° atau -19°, sehingga jadwal Subuh dapat berbeda beberapa menit antar metode.</p>
+
+          <h4>Dzuhur</h4>
+          <p>Dimulai saat matahari tepat tergelincir dari titik kulminasi (zawal). <em>Al-Hidayah</em> karya Al-Marghinani (Hanafi) dan <em>Al-Muwatta'</em> karya Imam Malik sama-sama menetapkan titik mula ini berdasarkan pengamatan langsung pergeseran bayangan setelah kulminasi; hampir seluruh mazhab sepakat pada titik ini, perbedaan kecil hanya pada penambahan ihtiyat sebagai jeda aman.</p>
+
+          <h4>Ashar — titik perbedaan paling menonjol</h4>
+          <p>Awal Ashar ditentukan saat panjang bayangan benda sama dengan tinggi bendanya (ditambah bayangan saat zawal). Imam Syafi'i dalam <em>Al-Umm</em> dan Imam Malik dalam <em>Al-Muwatta'</em>, didukung pula oleh mazhab Hambali, memakai faktor bayangan = 1 (jadwal Kemenag RI mengikuti pendapat ini). Sebaliknya, Imam Abu Hanifah — sebagaimana dibahas dalam <em>Al-Hidayah</em> dan <em>Badai' ash-Shanai'</em> karya Al-Kasani — berpegang pada riwayat praktik Nabi ﷺ yang menunjukkan Ashar dikerjakan agak lebih lambat, sehingga menetapkan faktor = 2. Ibnu Rusyd dalam kitab fikih perbandingan <em>Bidayatul Mujtahid wa Nihayatul Muqtashid</em> merangkum perbedaan ini sebagai contoh klasik ikhtilaf akibat perbedaan riwayat praktik (fi'liyah) Nabi ﷺ, bukan akibat perbedaan dalil tekstual.</p>
+
+          <h4>Maghrib</h4>
+          <p>Disepakati hampir seluruh mazhab dimulai sejak matahari terbenam sempurna (piringan atas matahari menghilang dari ufuk), berakhir saat hilangnya cahaya merah (syafaq) di ufuk barat — batas masuknya waktu Isya. Titik mula Maghrib termasuk salah satu yang paling sedikit diperselisihkan dalam fikih waktu sholat.</p>
+
+          <h4>Isya</h4>
+          <p>Dimulai saat syafaq (mega merah/putih) di ufuk barat benar-benar hilang, berdasarkan hadis batas waktu (HR. Muslim no. 612) dan dikuatkan hadis kelonggaran mengakhirkan Isya (HR. Bukhari no. 569). Berakhirnya waktu Isya diperselisihkan: <em>Al-Majmu'</em> (Syafi'iyah) membatasi hingga sepertiga malam sebagai waktu utama namun tetap sah hingga terbit fajar, sementara <em>Al-Mughni</em> (Hambali) memberi kelonggaran serupa dengan penekanan pada kondisi darurat — pendapat yang banyak diikuti ulama kontemporer untuk kondisi tertentu seperti perjalanan jauh atau kondisi lintang tinggi.</p>
+
+          <h4>Imsak</h4>
+          <p>Imsak bukan waktu sholat, melainkan tanda kehati-hatian (ihtiyat) untuk berhenti makan/minum sebelum Subuh saat berpuasa, berdasarkan kebiasaan generasi awal yang menyisakan waktu seukuran membaca 50 ayat sebelum fajar. Kemenag RI mengonversinya menjadi sekitar 10 menit sebelum Subuh. Sejumlah ulama kontemporer — di antaranya dalam fatwa-fatwa Yusuf Al-Qaradawi — mengingatkan bahwa imsak adalah ihtiyat yang baik namun tidak boleh dijadikan pengganti batas Subuh yang sesungguhnya, karena dalil tegas (QS Al-Baqarah 2: 187) menyebut batas puasa adalah terbitnya fajar shadiq, bukan beberapa menit sebelumnya — sehingga makan/minum hingga benar-benar masuk Subuh tetap sah secara fikih, meski kurang dianjurkan dari sisi kehati-hatian praktis.</p>
+
+          <h4>Dhuha</h4>
+          <p>Bukan sholat wajib; waktunya dimulai ketika matahari naik kira-kira setinggi tombak (~4,5° di atas ufuk) hingga menjelang Dzuhur, berdasarkan kebiasaan praktik para sahabat yang juga dibahas dalam kitab-kitab hadis tentang sholat-sholat sunnah.</p>
+
+          <div class="note-box">Bagi pembaca yang ingin menelusuri perbandingan mazhab secara lebih sistematis, kitab <em>Bidayatul Mujtahid wa Nihayatul Muqtashid</em> karya Ibnu Rusyd dan <em>Al-Fiqh al-Islami wa Adillatuh</em> karya Wahbah Az-Zuhaili banyak dijadikan rujukan akademik karena memetakan argumen tiap mazhab secara berdampingan beserta dalil dan ilustrasi sebab perbedaannya.</div>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Pendapat Ulama Kontemporer &amp; Lembaga Hisab <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <p>Hampir seluruh ormas dan lembaga keagamaan di Indonesia — termasuk yang berbeda pendapat dalam metode penentuan awal bulan Hijriyah (hisab vs rukyat) — sepakat menggunakan hisab astronomis untuk waktu sholat harian, karena posisi matahari adalah fenomena yang dapat diukur secara objektif dan tidak memerlukan pengamatan visual langsung seperti hilal. Perbedaan di antara mereka bukan pada metode (semua memakai hisab), melainkan pada <em>nilai parameter</em> yang dipakai sebagai representasi fajar shadiq dan hilangnya syafaq.</p>
+
+          <h4>Argumentasi Kementerian Agama RI</h4>
+          <p>Kemenag menetapkan kriteria sudut secara nasional melalui Tim Hisab Rukyat (kini bersinergi dengan riset BRIN) agar seluruh masjid dan lembaga di Indonesia memakai acuan yang sama, menghindari kebingungan jamaah akibat jadwal yang berbeda-beda di satu kota. Untuk Subuh, Kemenag RI mempertahankan kriteria -20° (kedalaman matahari di bawah ufuk) sebagai representasi fajar shadiq berdasarkan hadis pembeda fajar shadiq-kazib (lihat bagian Hadis), alih-alih mengikuti usulan revisi ke angka yang lebih kecil (-18°) yang pernah dikaji dalam forum regional. Argumen utamanya adalah <strong>kehati-hatian ibadah (al-iḥtiyāṭ fil-'ibādah)</strong>: karena Subuh adalah batas mulainya puasa dan sholat wajib, kriteria yang sedikit lebih dini dipandang lebih aman bagi keabsahan ibadah dibanding mengejar presisi astronomis semata, sejalan dengan kaidah fikih "ad-dar'u muqaddamun 'alal-jalb" (mencegah kekurangan dalam ibadah lebih didahulukan daripada mengejar kepraktisan/kemudahan).</p>
+
+          <h4>Argumentasi forum MABIMS</h4>
+          <p>Forum kerja sama hisab-rukyat negara serumpun (Brunei-Indonesia-Malaysia-Singapura) ini mendorong harmonisasi kriteria di kawasan Asia Tenggara agar jamaah lintas negara yang lintangnya berdekatan tidak dibingungkan selisih jadwal yang besar. Sejumlah kajian regional yang memanfaatkan observasi cahaya langit dengan sensor digital sempat mengusulkan revisi kriteria fajar dari -20° menjadi -18° karena dianggap lebih sesuai dengan kemunculan fajar shadiq secara empiris di kawasan tropis; usulan ini turut dipertimbangkan oleh sebagian negara anggota, sementara Kemenag RI dalam penyusunan jadwal sholat harian memilih tetap pada -20° dengan pertimbangan ihtiyat seperti dijelaskan di atas. Perbedaan pilihan antarnegara serumpun ini menggambarkan bahwa kriteria sudut tetaplah hasil ijtihad astronomis-fikih yang dapat berbeda meski sumber kajiannya saling beririsan.</p>
+
+          <h4>Argumentasi Majelis Tarjih Muhammadiyah</h4>
+          <p>Muhammadiyah dikenal lebih cepat mengadopsi temuan astronomi modern karena prinsip ijtihad yang menekankan kesesuaian dengan fakta empiris (kaidah "al-`ibratu bi haqā'iq al-falak", yakni hukum mengikuti fakta astronomis yang teruji). Majelis Tarjih turut mendukung revisi kriteria fajar mendekati -18° dengan argumen bahwa kriteria -20° dianggap terlalu dini dan tidak didukung pengamatan visual fajar shadiq yang konsisten di berbagai lintang Indonesia.</p>
+
+          <h4>Argumentasi Lajnah Falakiyah Nahdlatul Ulama</h4>
+          <p>NU secara tradisional lebih konservatif dalam isu ihtiyat: argumennya, karena waktu Subuh menjadi batas mulainya puasa dan sholat wajib, sebaiknya kriteria yang dipakai agak lebih awal (mendekati -20°) sebagai bentuk kehati-hatian fikih (al-ihtiyat fi al-`ibadah), meskipun secara astronomis fajar shadiq mungkin baru tampak sedikit lebih lambat. Prinsip ini mengikuti kaidah fikih "ad-dar'u muqaddamun `ala al-jalb" (mencegah kekurangan ibadah lebih didahulukan daripada mengejar kepraktisan).</p>
+
+          <h4>Argumentasi Diyanet İşleri Başkanlığı (Turki)</h4>
+          <p>Diyanet Turki memakai kriteria yang berbeda dari mayoritas dunia Arab/Asia Tenggara: fajar -18° dan Isya -17°, dengan alasan riset astronomi lokal di lintang tinggi Eropa-Asia (Turki berada di lintang yang lebih jauh dari ekuator dibanding Indonesia) menunjukkan syafaq di sana menghilang pada sudut yang sedikit lebih kecil dari -18°. Pendekatan Diyanet ini turut diikuti oleh sejumlah komunitas Muslim di Eropa yang berlintang tinggi, karena kriteria -18°/-20° standar Timur Tengah-Asia kadang menghasilkan waktu Isya yang sangat larut atau bahkan tidak tercapai di musim panas.</p>
+
+          <h4>Titik perdebatan yang masih berlangsung</h4>
+          <ul>
+            <li><strong>Akurasi kriteria fajar:</strong> sejumlah astronom Muslim kontemporer (misalnya hasil riset proyek pengamatan cahaya fajar internasional) mengusulkan sudut fajar shadiq yang bervariasi antara -12° hingga -18° bergantung kondisi atmosfer dan polusi cahaya lokal, jauh lebih kecil dari kriteria klasik -19°/-20° yang banyak dipakai — memunculkan perdebatan apakah jadwal Subuh selama ini "terlalu dini" beberapa menit hingga puluhan menit.</li>
+            <li><strong>Besaran ihtiyat ideal:</strong> sebagian ulama kontemporer menilai ihtiyat 2 menit sudah cukup memadai secara astronomis, sementara sebagian praktik di lapangan (terutama untuk Imsak) menambah jeda yang lebih besar (hingga 10-15 menit) sebagai bentuk kehati-hatian ekstra, yang oleh sebagian ulama lain dipandang berlebihan (ghuluw) karena tidak berdasar nash yang tegas.</li>
+            <li><strong>Standardisasi vs lokalitas:</strong> ada pula pandangan bahwa kriteria sudut semestinya disesuaikan per-lintang/iklim (lokal), bukan satu angka untuk seluruh dunia, karena ketebalan atmosfer dan tingkat polusi cahaya berbeda signifikan antara kota tropis dataran rendah dan kota lintang tinggi.</li>
+          </ul>
+          <div class="note-box">Kalkulator pada halaman ini menetapkan kriteria sudut secara tetap mengikuti Kemenag RI (Subuh −20°, Isya −18°), sebagai acuan tunggal yang berlaku resmi di Indonesia. Perbandingan dengan kriteria MABIMS lama, NU, Muhammadiyah, dan Turki di atas disajikan untuk wawasan ilmiah mengenai keragaman ijtihad astronomis-fikih, bukan sebagai opsi yang dapat dipilih dalam perhitungan.</div>
+        </div>
+      </details>
+
+
+      <details class="edu">
+        <summary>Kasus Khusus: Sholat di Luar Angkasa <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <p>Kasus ini mengemuka sejak astronot Muslim pertama yang melaksanakan misi panjang di stasiun luar angkasa (ISS) menjalankan ibadah sholat di orbit. Di ISS, satu "hari" matahari terbit-terbenam hanya berlangsung sekitar 90 menit karena kecepatan orbit yang sangat tinggi, sehingga penentuan waktu sholat berbasis posisi matahari menjadi tidak praktis.</p>
+          <p>Panduan yang dikeluarkan oleh lembaga fatwa (termasuk panduan yang disusun untuk misi tersebut) memberikan solusi berupa:</p>
+          <ul>
+            <li>Menetapkan waktu sholat berdasarkan zona waktu tempat peluncuran/markas kendali misi (mengikuti waktu 24 jam standar di bumi), bukan mengikuti siklus terbit-terbenam yang dialami di orbit.</li>
+            <li>Membolehkan menggabungkan (menjama') sholat-sholat tertentu mengingat kesulitan praktis memisahkan lima waktu dalam siklus 90 menit.</li>
+            <li>Arah kiblat ditentukan dengan pendekatan terbaik yang memungkinkan (misalnya menghadap ke arah Bumi/Ka'bah secara proyeksi, atau menghadap arah peluncuran bila tidak memungkinkan secara presisi), dengan kelonggaran mengingat kondisi darurat (rukhsah).</li>
+            <li>Posisi sholat (berdiri, duduk, gerakan rukuk-sujud) disesuaikan dengan kondisi tanpa gravitasi sesuai kemampuan, sejalan dengan prinsip fikih bahwa kewajiban gugur sebagian sesuai kemampuan (mā lā yudraku kulluhu lā yusqaṭu kulluhu).</li>
+          </ul>
+          <div class="note-box">Prinsip dasarnya: ketika parameter alami (matahari, siang-malam) tidak lagi relevan, fikih beralih ke prinsip "waktu terdekat yang masih bermakna" — dalam hal ini waktu standar di bumi/lokasi acuan.</div>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Kasus Khusus: Sholat di Wilayah Kutub <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <p>Di lintang tinggi mendekati kutub (umumnya di atas ±48°–66°), pada musim tertentu matahari tidak pernah turun cukup dalam untuk mencapai sudut -18° (Isya) atau -20° (Subuh), bahkan pada kondisi ekstrem matahari tidak terbenam sama sekali (midnight sun) atau tidak terbit sama sekali (polar night). Akibatnya rumus hisab standar gagal menghasilkan waktu (secara matematis nilainya tidak terdefinisi).</p>
+          <p>Beberapa solusi yang diusulkan ulama dan lembaga hisab kontemporer:</p>
+          <ul>
+            <li><strong>Aqrab al-Bilad (kota terdekat):</strong> menggunakan jadwal lintang terdekat yang masih normal (umumnya dibatasi hingga ±45°) sebagai acuan proporsional.</li>
+            <li><strong>Aqrab al-Ayyam (hari terdekat):</strong> menggunakan jadwal hari terakhir/terdekat sebelum fenomena ekstrem terjadi di lokasi yang sama.</li>
+            <li><strong>Mengikuti waktu Mekkah atau zona waktu tengah:</strong> sebagian pendapat membolehkan mengikuti pembagian waktu 24 jam secara proporsional (membagi rata siklus siang-malam menjadi lima waktu) sebagai pendekatan praktis.</li>
+            <li><strong>Kalkulator ini</strong> menggunakan pendekatan pertama (pembatasan lintang efektif) sebagai fallback otomatis bila terjadi kondisi ekstrem, dan akan memberi tanda peringatan pada baris tabel yang terdampak.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Kasus Khusus: Sholat dalam Perjalanan (Musafir) <span class="arrow">›</span></summary>
+        <div class="edu-body">
+          <p>Bagi musafir yang memenuhi syarat jarak dan durasi tertentu menurut mazhab masing-masing, syariat memberi keringanan berupa:</p>
+          <ul>
+            <li><strong>Qashar:</strong> meringkas sholat empat rakaat (Dzuhur, Ashar, Isya) menjadi dua rakaat, berdasarkan riwayat praktik Nabi ﷺ dan para sahabat ketika bersafar.</li>
+            <li><strong>Jama' Taqdim:</strong> menggabungkan dua sholat (Dzuhur-Ashar atau Maghrib-Isya) pada waktu yang lebih awal.</li>
+            <li><strong>Jama' Ta'khir:</strong> menggabungkan keduanya pada waktu yang lebih akhir.</li>
+          </ul>
+          <p>Dalam praktiknya, jadwal waktu sholat hasil hisab tetap menjadi acuan batas masing-masing waktu; jama' dan qashar adalah keringanan pelaksanaan rakaat dan penggabungan waktu, bukan perubahan pada batas waktu astronomis itu sendiri. Musafir disarankan menggunakan koordinat lokasi terkini (bukan lokasi asal) untuk hasil yang akurat.</p>
+        </div>
+      </details>
+
+      <details class="edu">
+        <summary>Penafsiran Dalil Posisi Matahari untuk Waktu Sholat: Perspektif Ahli Fikih &amp; Ahli Falak <span class="arrow">›</span></summary>
+        <div class="edu-body">
+
+          <h4>I. Kerangka Dasar: Al-Qur'an Menyebut Fenomena, Falak Mengukurnya</h4>
+          <p>Para ulama fikih klasik dan kontemporer sepakat bahwa Al-Qur'an dan hadis menyebutkan penanda waktu sholat dalam bentuk <em>fenomena alam astronomikal</em> yang dapat diamati secara visual maupun dihitung secara matematis. Imam Asy-Syafi'i dalam <em>Ar-Risalah</em> menegaskan bahwa perintah sholat terikat pada "awqāt makhsūsah" (waktu-waktu tertentu) yang penandanya adalah kejadian-kejadian alam — bukan jam buatan manusia. Oleh karena itu, ilmu falak (astronomi Islam) sejak abad ke-8 M ditempatkan para ulama sebagai alat bantu syar'i yang wajib, bukan sekadar ilmu duniawi tambahan.</p>
+
+          <h4>II. Dulū'kisy-Syams: Matahari Tergelincir → Awal Dzuhur</h4>
+          <p>QS. Al-Isra' (17): 78 menyebut <em>dulū'kisy-syams</em> sebagai tanda awal waktu sholat. Kata <em>dalakata</em> dalam bahasa Arab berarti "bergeser dari tempat tertingginya". Imam At-Thabari dalam <em>Jami' al-Bayan</em> menafsirkan ini sebagai saat matahari melewati titik kulminasi (titik tertinggi di langit) dan mulai condong ke barat — peristiwa yang dalam falak disebut <em>zawal</em> (transit). Imam Al-Qurthubi dalam <em>Al-Jami' li-Ahkam al-Qur'an</em> mempertegas: "al-dulūk yaitu condongnya matahari dari pertengahan langit" dan seluruh ulama empat mazhab menjadikannya sebagai awal Dzuhur tanpa perselisihan. Secara falak, zawal terjadi persis saat sudut jam matahari (Hour Angle) = 0°, yakni saat matahari tepat berada di meridian langit atas. Ahli falak Ibnu Yunus (abad X M) dalam <em>Az-Zij al-Kabir al-Hakimi</em> telah menghitung saat zawal berdasarkan deklinasi matahari dan lintang tempat, fondasi yang masih dipakai rumus dzuhur modern.</p>
+
+          <h4>III. Fai' / Bayang-Bayang → Awal &amp; Akhir Ashar</h4>
+          <p>Hadis Jibril (HR. Abu Dawud no. 393, At-Tirmidzi no. 149) menyebut awal Ashar ketika "bayangan benda sama dengan tingginya" dan akhir Ashar ketika "bayangan benda dua kali tingginya". Ini adalah <em>penanda panjang bayangan yang langsung merepresentasikan sudut ketinggian matahari</em>. Imam An-Nawawi dalam <em>Al-Majmu' Syarh al-Muhadzdzab</em> (jilid 3) menjelaskan secara geometris: bayangan = tinggi benda terjadi ketika cotangen ketinggian matahari = 1, yakni ketinggian matahari = 45° dikurangi deklinasi. Imam Ibnu Qudamah dalam <em>Al-Mughni</em> memaparkan hal serupa namun menambahkan perbedaan mazhab Hanafi (bayangan = dua kali tinggi benda) sebagai tafsir berbeda atas hadis yang sama. Al-Battani (abad IX M) dalam <em>Kitab Az-Zij</em> sudah merumuskan hubungan cotangen ini secara matematis, membuktikan bahwa dalil hadis selaras penuh dengan geometri bola langit.</p>
+
+          <h4>IV. Ghurūbusy-Syams: Matahari Terbenam → Maghrib</h4>
+          <p>QS. Hud (11): 114 menyebut "ṭarafayin nahār" (dua ujung siang), yang oleh mayoritas mufassir mencakup saat-saat terbenam matahari. Imam Fakhr Ar-Razi dalam <em>Mafatih al-Ghayb</em> mengidentifikasi "ṭarafay nahār al-akhir" sebagai waktu Maghrib. Secara falak, Maghrib terjadi saat piringan atas matahari menyentuh ufuk hakiki (true horizon), atau dalam hisab modern ketika ketinggian matahari = −0,833° (gabungan koreksi refraksi atmosfer ±0,575° dan jari-jari piringan matahari ±0,267°). Syaikh Ali Musthafa Musyarrafah dalam <em>Al-Falak wa al-Hisab</em> (Mesir, 1948) menguraikan koreksi ini secara rinci, dan hampir semua perangkat lunak hisab modern termasuk jadwal Kemenag menggunakannya. Mazhab Syafi'i dan Hambali menggunakan batas ini sebagai awal Maghrib; Imam Malik dalam <em>Al-Muwatta'</em> menyatakan awal Maghrib "ḥīna taghrubusy-syams" (tatkala matahari terbenam), identik secara astronomis.</p>
+
+          <h4>V. Syafaq: Mega Merah/Putih Menghilang → Batas Akhir Maghrib &amp; Awal Isya</h4>
+          <p>Hadis riwayat Muslim no. 612 menyebut Isya masuk "ḥīna yaghibusy-syafaq" (ketika mega menghilang). Ulama berselisih tentang makna <em>syafaq</em>: mazhab Syafi'i, Maliki, dan Hambali menafsirkannya sebagai <em>al-ahmar</em> (mega merah), sehingga Isya masuk saat cahaya merah di ufuk barat hilang, setara dengan matahari sekitar −15° hingga −18° di bawah ufuk. Mazhab Hanafi menafsirkan syafaq sebagai <em>al-abyadh</em> (mega putih) yang hilang lebih lambat, setara sekitar −17° hingga −19°. Imam Ibnu Rusyd dalam <em>Bidayatul Mujtahid</em> (Juz I, Bab Mawaqit) memaparkan perselisihan ini secara komprehensif dan menyimpulkan bahwa perbedaan bersumber pada perbedaan interpretasi kata "syafaq" dalam bahasa Arab, bukan pada penolakan terhadap fenomena astronomis itu sendiri. Ahli falak Muhammad Odeh (Jordania, ketua ICOP) dalam berbagai makalahnya menunjukkan bahwa pengamatan syafaq modern dengan sensor fotometrik mendukung sudut sekitar −15° hingga −18° untuk mega merah, mendekati kriteria Syafi'i-Maliki. Kemenag RI menetapkan Isya = −18° berdasarkan kehati-hatian mengambil nilai yang lebih dalam (lebih gelap) agar benar-benar melampaui hilangnya syafaq merah.</p>
+
+          <h4>VI. Fajr Shadiq: Fajar Benar → Awal Subuh &amp; Batas Sahur</h4>
+          <p>HR. Muslim no. 1093 (dari Samurah bin Jundub) dan HR. At-Tirmidzi no. 705 membedakan secara tegas dua jenis fajar: <em>fajr kazib</em> (fajar palsu) yang berwarna putih memanjang vertikal seperti ekor serigala (<em>dzanabus-su'ban</em>), dan <em>fajr shadiq</em> (fajar benar) yang berwarna putih melebar horizontal di ufuk timur. Syarat masuknya waktu Subuh adalah fajr shadiq, bukan fajr kazib. Imam Ibnu Hajar Al-Asqalani dalam <em>Fathul Bari Syarh Shahih Al-Bukhari</em> (Kitab Mawaqit Ash-Shalah) menjelaskan perbedaan fenomenal keduanya secara terperinci dan menegaskan bahwa fajr shadiq adalah tanda astronomis yang definitif. Kemenag RI memilih sudut −20° (kedalaman matahari di bawah ufuk) sebagai representasi fajr shadiq atas dasar: (1) kehati-hatian — lebih baik memulai Subuh sedikit lebih awal daripada terlambat melaksanakan sholat pertama di pagi hari; (2) sejumlah pengamatan di Indonesia menunjukkan fajar shadiq dapat muncul pada kondisi atmosfer bersih sekitar sudut ini. Ahli falak BRIN dalam kajian observasi 2020–2022 melaporkan variasi kemunculan fajr shadiq antara −15° hingga −20° bergantung kondisi atmosfer dan ketinggian lokasi — menunjukkan bahwa −20° masih dalam rentang yang dapat dipertanggungjawabkan secara observasional di Indonesia.</p>
+
+          <h4>VII. Sintesis: Dari Teks ke Sudut Matahari</h4>
+          <p>Wahbah Az-Zuhaili dalam <em>Al-Fiqh al-Islami wa Adillatuhu</em> (Juz I, edisi ke-4) menyimpulkan bahwa penentuan waktu sholat berbasis hisab falak adalah <em>fardu kifayah</em> bagi komunitas Muslim dan hasilnya mengikat secara fikih selama metodenya sahih dan dilakukan oleh ahli yang kompeten. Beliau menegaskan: "al-hisab al-falaki al-mu'tabar huwa al-wasīlatu al-maqbūlatu syar'an li-tahdīdi awqātis-shalah" (hisab falak yang sahih adalah sarana yang diterima secara syar'i untuk menentukan waktu sholat). Ibnu 'Abidin dalam <em>Radd al-Muhtar</em> menyatakan bahwa apabila ahli falak menyatakan waktu tertentu berdasarkan perhitungan yang benar, pernyataannya menjadi hujjah (bukti hukum) yang wajib diikuti, sejajar dengan kesaksian rukyat visual. Dengan demikian, tabel jadwal yang dihasilkan kalkulator ini bukan sekadar konversi matematis — ia merupakan <em>ijma' ahli fikih dan ahli falak</em> yang telah berlangsung selama lebih dari satu milenium.</p>
+
+          <div class="note-box">Rujukan utama: Imam At-Thabari — <em>Jami' al-Bayan</em>; Imam Al-Qurthubi — <em>Al-Jami' li-Ahkam al-Qur'an</em>; Imam An-Nawawi — <em>Al-Majmu'</em>; Imam Ibnu Qudamah — <em>Al-Mughni</em>; Imam Ibnu Rusyd — <em>Bidayatul Mujtahid</em>; Imam Ibnu Hajar Al-Asqalani — <em>Fathul Bari</em>; Wahbah Az-Zuhaili — <em>Al-Fiqh al-Islami wa Adillatuhu</em>; Ibnu 'Abidin — <em>Radd al-Muhtar</em>; Al-Battani — <em>Kitab Az-Zij</em>; Ibnu Yunus — <em>Az-Zij al-Kabir al-Hakimi</em>; Muhammad Odeh — makalah ICOP tentang observasi syafaq.</div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- ============ INPUT FORM ============ -->
+  <div class="section" id="kalkulator">
+    <div class="section-head"><div class="num">۲</div><h2>Kalkulator Jadwal</h2><div class="divider"></div></div>
+
+    <div class="card form-card">
+      <div class="mode-toggle">
+        <button type="button" class="mode-btn active" id="btnMasehi" onclick="setMode('masehi')">
+          Tahun Masehi
+          <small>Jadwal sholat bulanan sepanjang tahun Masehi</small>
+        </button>
+        <button type="button" class="mode-btn" id="btnHijriyah" onclick="setMode('hijriyah')">
+          Tahun Hijriyah
+          <small>Jadwal imsakiyah / bulan Hijriyah tertentu</small>
+        </button>
+      </div>
+
+      <!-- GPS BUTTON -->
+      <div style="margin-bottom:4px;">
+        <button type="button" class="gps-btn" id="gpsBtn" onclick="getGPS()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-width="1.2" stroke-dasharray="2 2"/></svg>
+          Deteksi Lokasi Otomatis (GPS)
+        </button>
+        <div class="gps-status" id="gpsStatus"></div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field field-wide">
+          <label>Lintang Tempat</label>
+          <div class="dms-group">
+            <input type="number" id="latDeg" min="0" max="90" value="6" placeholder="°">
+            <div class="unit">°</div>
+            <input type="number" id="latMin" min="0" max="59" value="58" placeholder="'">
+            <div class="unit">'</div>
+            <input type="number" id="latSec" min="0" max="59" value="0" step="0.1" placeholder='"'>
+            <div class="unit">"</div>
+            <select id="latDir">
+              <option value="1">LU</option>
+              <option value="-1" selected>LS</option>
+            </select>
+          </div>
+          <div class="hint">LU = Lintang Utara, LS = Lintang Selatan</div>
+        </div>
+        <div class="field field-wide">
+          <label>Bujur Tempat</label>
+          <div class="dms-group">
+            <input type="number" id="lonDeg" min="0" max="180" value="110" placeholder="°">
+            <div class="unit">°</div>
+            <input type="number" id="lonMin" min="0" max="59" value="25" placeholder="'">
+            <div class="unit">'</div>
+            <input type="number" id="lonSec" min="0" max="59" value="0" step="0.1" placeholder='"'>
+            <div class="unit">"</div>
+            <select id="lonDir">
+              <option value="1" selected>BT</option>
+              <option value="-1">BB</option>
+            </select>
+          </div>
+          <div class="hint">BT = Bujur Timur, BB = Bujur Barat</div>
+        </div>
+        <div class="field">
+          <label for="tz">Zona Waktu (UTC)</label>
+          <input type="number" id="tz" step="0.5" value="7">
+          <div class="hint">WIB=+7, WITA=+8, WIT=+9</div>
+        </div>
+        <div class="field">
+          <label for="loc">Nama Lokasi (opsional)</label>
+          <input type="text" id="loc" placeholder="Semarang, Jawa Tengah" style="font-family:'Mulish',sans-serif;">
+        </div>
+        <div class="field">
+          <label for="ihtiyat">Ihtiyat (menit)</label>
+          <input type="number" id="ihtiyat" step="1" min="0" max="10" value="2">
+          <div class="hint">Standar Kemenag: 2 menit</div>
+        </div>
+        <div class="field field-wide">
+          <label>Kriteria Sudut Hisab</label>
+          <div style="background:var(--gold-pale);border:1.5px solid var(--line);border-radius:9px;padding:11px 14px;font-family:'Cairo',sans-serif;font-weight:700;color:var(--deep);font-size:15px;">
+            Kemenag RI &mdash; Subuh &minus;20&deg;, Isya &minus;18&deg;
+          </div>
+          <div class="hint">Kriteria resmi Kementerian Agama RI &mdash; Faktor bayangan Ashar = 1 (mazhab Syafi&rsquo;i)</div>
+        </div>
+
+        <div class="field" id="fieldMasehiYear">
+          <label for="tahunMasehi">Tahun Masehi</label>
+          <input type="number" id="tahunMasehi" value="2026" min="1900" max="2200">
+        </div>
+        <div class="field" id="fieldMasehiMonth">
+          <label for="bulanMasehi">Bulan</label>
+          <select id="bulanMasehi">
+            <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+            <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+            <option value="7" selected>Juli</option><option value="8">Agustus</option><option value="9">September</option>
+            <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+          </select>
+        </div>
+
+        <div class="field hidden" id="fieldHijriYear">
+          <label for="tahunHijri">Tahun Hijriyah</label>
+          <input type="number" id="tahunHijri" value="1448" min="1300" max="1600">
+        </div>
+        <div class="field hidden" id="fieldHijriMonth">
+          <label for="bulanHijri">Bulan Hijriyah</label>
+          <select id="bulanHijri">
+            <option value="1">Muharram</option><option value="2">Safar</option><option value="3">Rabiul Awal</option>
+            <option value="4">Rabiul Akhir</option><option value="5">Jumadil Awal</option><option value="6">Jumadil Akhir</option>
+            <option value="7">Rajab</option><option value="8">Sya'ban</option><option value="9" selected>Ramadan</option>
+            <option value="10">Syawal</option><option value="11">Dzulqa'dah</option><option value="12">Dzulhijjah</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="generateSchedule()">✦ Buat Jadwal</button>
+    </div>
+  </div>
+
+  <!-- ============ RESULT ============ -->
+  <div class="section" id="hasil">
+    <div class="section-head"><div class="num">۳</div><h2>Hasil Jadwal Waktu Sholat</h2><div class="divider"></div></div>
+
+    <div id="metaArea" class="meta-strip"></div>
+
+    <div class="export-bar">
+      <button class="btn-export" onclick="exportToExcel()">⬇ Export ke Excel (.xlsx)</button>
+    </div>
+
+    <div class="table-frame">
+      <span class="corner-tl"></span><span class="corner-tr"></span><span class="corner-bl"></span><span class="corner-br"></span>
+      <div class="table-scroll">
+        <table class="sholat" id="tabelHasil">
+          <thead>
+            <tr>
+              <th>Hari</th>
+              <th>Tanggal Masehi</th>
+              <th>Tanggal Hijriyah</th>
+              <th>Imsak</th>
+              <th>Subuh</th>
+              <th>Terbit</th>
+              <th>Dhuha</th>
+              <th>Dzuhur</th>
+              <th>Ashar</th>
+              <th>Maghrib</th>
+              <th>Isya</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyHasil">
+            <tr><td colspan="11" style="padding:30px;color:var(--ink-soft);font-family:'Mulish',sans-serif;">Isi data lokasi &amp; periode di atas, lalu klik "Buat Jadwal".</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:#EADFB8"></span> Baris hari Jumat</span>
+      <span><span class="dot" style="background:var(--maroon)"></span> Tanggal disorot merah = berada dalam bulan Ramadan</span>
+      <span>* tanda = koreksi otomatis wilayah lintang ekstrem</span>
+    </div>
+
+    <div class="foot-note" id="footNote"></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="ar">وَأَقِمِ الصَّلَاةَ لِذِكْرِي</div>
+  Mawāqīt — Kalkulator Waktu Sholat berbasis hisab astronomis dengan kriteria mengikuti pedoman Kementerian Agama RI.<br>
+  Hasil hisab bersifat estimasi astronomis; untuk keperluan ibadah resmi (khususnya penetapan awal Ramadan/Syawal), tetap rujuk pengumuman sidang isbat Kementerian Agama RI.
+</footer>
+
+<script>
+/* ===================== STAR PATTERN (decorative) ===================== */
+document.documentElement.style.setProperty('--star-pattern',
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cg fill='none' stroke='%23E7C45F' stroke-width='1'%3E%3Cpath d='M45 5 L60 30 L85 30 L65 47 L75 75 L45 58 L15 75 L25 47 L5 30 L30 30 Z'/%3E%3C/g%3E%3C/svg%3E\")"
+);
+
+/* ===================== EDU SECTION COLLAPSE ===================== */
+/* ===================== GPS GEOLOCATION ===================== */
+function decimalToDMS(decimal){
+  const abs = Math.abs(decimal);
+  const deg = Math.floor(abs);
+  const minFull = (abs - deg) * 60;
+  const min = Math.floor(minFull);
+  const sec = parseFloat(((minFull - min) * 60).toFixed(1));
+  return { deg, min, sec };
+}
+function fillDMS(lat, lon){
+  const la = decimalToDMS(lat);
+  document.getElementById('latDeg').value = la.deg;
+  document.getElementById('latMin').value = la.min;
+  document.getElementById('latSec').value = la.sec;
+  document.getElementById('latDir').value = lat < 0 ? '-1' : '1';
+
+  const lo = decimalToDMS(lon);
+  document.getElementById('lonDeg').value = lo.deg;
+  document.getElementById('lonMin').value = lo.min;
+  document.getElementById('lonSec').value = lo.sec;
+  document.getElementById('lonDir').value = lon < 0 ? '-1' : '1';
+}
+function guessTimezone(lon){
+  return Math.round(lon / 15);
+}
+function setGpsStatus(msg, type){
+  const el = document.getElementById('gpsStatus');
+  el.textContent = msg;
+  el.className = 'gps-status ' + type;
+  el.style.display = 'block';
+}
+function getGPS(){
+  const btn = document.getElementById('gpsBtn');
+  if(!navigator.geolocation){
+    setGpsStatus('Browser Anda tidak mendukung GPS / Geolocation. Isi koordinat secara manual.', 'err');
+    return;
+  }
+  btn.disabled = true;
+  setGpsStatus('⏳ Mendeteksi lokasi… Mohon izinkan akses GPS pada browser Anda.', 'loading');
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const acc = Math.round(pos.coords.accuracy);
+      fillDMS(lat, lon);
+      // auto-set timezone based on longitude
+      const tz = guessTimezone(lon);
+      document.getElementById('tz').value = tz;
+      btn.disabled = false;
+      setGpsStatus(`✓ Lokasi terdeteksi: ${lat.toFixed(5)}°, ${lon.toFixed(5)}° (akurasi ±${acc} m). Koordinat telah diisi otomatis.`, 'ok');
+    },
+    function(err){
+      btn.disabled = false;
+      const msgs = {
+        1: 'Izin GPS ditolak. Aktifkan izin lokasi di pengaturan browser/smartphone Anda, lalu coba lagi.',
+        2: 'Posisi tidak dapat ditentukan. Pastikan GPS aktif dan sinyal tersedia.',
+        3: 'Waktu habis. Coba lagi di tempat yang lebih terbuka.',
+      };
+      setGpsStatus('✗ ' + (msgs[err.code] || 'Gagal mendapatkan lokasi.'), 'err');
+    },
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+  );
+}
+
+/* ===================== SECTION TOGGLE ===================== */
+function toggleEdu(){
+  const grid = document.getElementById('eduGrid');
+  const btn = document.getElementById('eduToggleBtn');
+  const label = document.getElementById('eduToggleLabel');
+  const collapsed = grid.classList.toggle('collapsed');
+  btn.classList.toggle('collapsed', collapsed);
+  label.textContent = collapsed ? 'Tampilkan' : 'Sembunyikan';
+}
+
+/* ===================== MODE SWITCH ===================== */
+function setMode(mode){
+  const isMasehi = mode === 'masehi';
+  document.getElementById('btnMasehi').classList.toggle('active', isMasehi);
+  document.getElementById('btnHijriyah').classList.toggle('active', !isMasehi);
+  document.getElementById('fieldMasehiYear').classList.toggle('hidden', !isMasehi);
+  document.getElementById('fieldMasehiMonth').classList.toggle('hidden', !isMasehi);
+  document.getElementById('fieldHijriYear').classList.toggle('hidden', isMasehi);
+  document.getElementById('fieldHijriMonth').classList.toggle('hidden', isMasehi);
+  window._mode = mode;
+}
+window._mode = 'masehi';
+
+/* ===================== ASTRONOMY HELPERS ===================== */
+function fixAngle(a){ a = a - 360*Math.floor(a/360); return a<0? a+360 : a; }
+function fixHour(h){ h = h - 24*Math.floor(h/24); return h<0? h+24 : h; }
+const dtr = d => d*Math.PI/180;
+const rtd = r => r*180/Math.PI;
+const dsin = d => Math.sin(dtr(d));
+const dcos = d => Math.cos(dtr(d));
+const dtan = d => Math.tan(dtr(d));
+const darcsin = x => rtd(Math.asin(x));
+const darccos = x => rtd(Math.acos(x));
+const darccot = x => rtd(Math.atan(1/x));
+const darctan2 = (y,x) => rtd(Math.atan2(y,x));
+
+function julianDay(y,m,d){
+  if(m<=2){ y-=1; m+=12; }
+  const A = Math.floor(y/100);
+  const B = 2 - A + Math.floor(A/4);
+  return Math.floor(365.25*(y+4716)) + Math.floor(30.6001*(m+1)) + d + B - 1524.5;
+}
+function jdToGregorian(jd){
+  jd += 0.5;
+  const Z = Math.floor(jd);
+  const F = jd - Z;
+  let A;
+  if(Z < 2299161){ A = Z; } else {
+    const alpha = Math.floor((Z - 1867216.25)/36524.25);
+    A = Z + 1 + alpha - Math.floor(alpha/4);
+  }
+  const B = A + 1524;
+  const C = Math.floor((B-122.1)/365.25);
+  const D = Math.floor(365.25*C);
+  const E = Math.floor((B-D)/30.6001);
+  const day = B - D - Math.floor(30.6001*E) + F;
+  const month = (E<14)? E-1 : E-13;
+  const year = (month>2)? C-4716 : C-4715;
+  return {year, month, day:Math.floor(day)};
+}
+function dayOfWeek(y,m,d){
+  const t=[0,3,2,5,0,3,5,1,4,6,2,4];
+  let yy=y;
+  if(m<3) yy--;
+  return ((yy + Math.floor(yy/4) - Math.floor(yy/100) + Math.floor(yy/400) + t[m-1] + d) % 7 + 7) % 7;
+}
+function sunPosition(jd){
+  const D = jd - 2451545.0;
+  const g = fixAngle(357.529 + 0.98560028*D);
+  const q = fixAngle(280.459 + 0.98564736*D);
+  const L = fixAngle(q + 1.915*dsin(g) + 0.020*dsin(2*g));
+  const e = 23.439 - 0.00000036*D;
+  const RA = darctan2(dcos(e)*dsin(L), dcos(L))/15;
+  const eqt = q/15 - fixHour(RA);
+  const decl = darcsin(dsin(e)*dsin(L));
+  return {decl, eqt};
+}
+function hourAngle(angle, lat, decl){
+  const val = (-dsin(angle) - dsin(lat)*dsin(decl)) / (dcos(lat)*dcos(decl));
+  if(val < -1 || val > 1) return null;
+  return darccos(val)/15;
+}
+
+/* ===================== HIJRI <-> JD (tabular/Kuwaiti algorithm) ===================== */
+const ISLAMIC_EPOCH = 1948439.5;
+function hijriToJD(year, month, day){
+  return day + Math.ceil(29.5*(month-1)) + (year-1)*354 + Math.floor((3+11*year)/30) + ISLAMIC_EPOCH - 1;
+}
+function jdToHijri(jdIn){
+  const jd = Math.floor(jdIn) + 0.5;
+  let year = Math.floor((30*(jd-ISLAMIC_EPOCH)+10646)/10631);
+  let month = Math.min(12, Math.ceil((jd - (29 + hijriToJD(year,1,1)))/29.5)+1);
+  let day = Math.round(jd - hijriToJD(year,month,1) + 1);
+  return {year, month, day};
+}
+function hijriMonthLength(year, month){
+  const nextY = month===12? year+1 : year;
+  const nextM = month===12? 1 : month+1;
+  return hijriToJD(nextY,nextM,1) - hijriToJD(year,month,1);
+}
+
+const HARI_ID = ['Minggu','Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu'];
+const BULAN_M = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const BULAN_H = ['','Muharram','Safar','Rabiul Awal','Rabiul Akhir','Jumadil Awal','Jumadil Akhir','Rajab',"Sya'ban",'Ramadan','Syawal',"Dzulqa'dah",'Dzulhijjah'];
+
+/* ===================== PRAYER TIME ENGINE ===================== */
+const KRITERIA_KEMENAG = { label:'Kemenag RI', fajr:20, isha:18 };
+const ANGLE_SUN = 1, ANGLE_DHUHA = 4.5, ASR_FACTOR = 1;
+const POLAR_LIMIT = 48; // fallback latitude clamp for extreme-latitude regions
+
+function toHM(t){
+  if(t===null || isNaN(t)) return '—';
+  t = fixHour(t);
+  let h = Math.floor(t);
+  let m = Math.round((t-h)*60);
+  if(m===60){ m=0; h+=1; }
+  h = Math.floor(fixHour(h));
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+
+function computeDay(y, m, d, lat, lon, tz, ihtiyatMin, fajrAngle, ishaAngle){
+  const jd = julianDay(y,m,d);
+  let useLat = lat;
+  let clamped = false;
+  let {decl, eqt} = sunPosition(jd);
+
+  function angleTime(angle){
+    let ha = hourAngle(angle, useLat, decl);
+    if(ha === null){
+      clamped = true;
+      const fallbackLat = (lat<0? -1:1)*POLAR_LIMIT;
+      ha = hourAngle(angle, fallbackLat, decl);
+    }
+    return ha;
+  }
+
+  const dhuhr = 12 + tz - lon/15 - eqt;
+  const haFajr = angleTime(fajrAngle);
+  const haSun  = angleTime(ANGLE_SUN);
+  const haDhuha= angleTime(-ANGLE_DHUHA); // sun above horizon -> negative angle in this convention
+  const haIsha = angleTime(ishaAngle);
+  const asrAngle = darccot(ASR_FACTOR + dtan(Math.abs(lat-decl)));
+  const haAsr = angleTime(-asrAngle);
+
+  const ihtiyat = ihtiyatMin/60;
+  const fajr   = haFajr===null? null : dhuhr - haFajr;
+  const sunrise= haSun===null? null : dhuhr - haSun;
+  const dhuha  = haDhuha===null? null : dhuhr - haDhuha;
+  const asr    = haAsr===null? null : dhuhr + haAsr;
+  const maghrib= haSun===null? null : dhuhr + haSun;
+  const isha   = haIsha===null? null : dhuhr + haIsha;
+
+  return {
+    imsak: fajr===null? null : fajr - (10/60) - ihtiyat,
+    subuh: fajr===null? null : fajr + ihtiyat,
+    terbit: sunrise===null? null : sunrise - ihtiyat,
+    dhuha: dhuha===null? null : dhuha - ihtiyat,
+    dzuhur: dhuhr + ihtiyat,
+    ashar: asr===null? null : asr + ihtiyat,
+    maghrib: maghrib===null? null : maghrib + ihtiyat,
+    isya: isha===null? null : isha + ihtiyat,
+    clamped
+  };
+}
+
+/* ===================== TABLE RENDERING ===================== */
+function rowHTML(y,m,d, times, isFriday, isRamadan){
+  const hj = jdToHijri(julianDay(y,m,d));
+  const dow = dayOfWeek(y,m,d);
+  const flagClass = (isFriday?' friday':'') + (isRamadan?' ramadan-row':'');
+  const flag = times.clamped ? '*' : '';
+  return `<tr class="${flagClass.trim()}">
+    <td class="daycell">${HARI_ID[dow]}</td>
+    <td class="daycell">${d} ${BULAN_M[m]} ${y}</td>
+    <td class="hijricell">${hj.day} ${BULAN_H[hj.month]} ${hj.year} H</td>
+    <td>${toHM(times.imsak)}${flag}</td>
+    <td>${toHM(times.subuh)}${flag}</td>
+    <td>${toHM(times.terbit)}${flag}</td>
+    <td>${toHM(times.dhuha)}</td>
+    <td>${toHM(times.dzuhur)}</td>
+    <td>${toHM(times.ashar)}</td>
+    <td>${toHM(times.maghrib)}${flag}</td>
+    <td>${toHM(times.isya)}${flag}</td>
+  </tr>`;
+}
+
+function dmsToDecimal(deg, min, sec, dir){
+  return dir * (Math.abs(deg) + Math.abs(min)/60 + Math.abs(sec)/3600);
+}
+
+function generateSchedule(){
+  const latDeg = parseFloat(document.getElementById('latDeg').value) || 0;
+  const latMin = parseFloat(document.getElementById('latMin').value) || 0;
+  const latSec = parseFloat(document.getElementById('latSec').value) || 0;
+  const latDir = parseFloat(document.getElementById('latDir').value);
+  const lonDeg = parseFloat(document.getElementById('lonDeg').value) || 0;
+  const lonMin = parseFloat(document.getElementById('lonMin').value) || 0;
+  const lonSec = parseFloat(document.getElementById('lonSec').value) || 0;
+  const lonDir = parseFloat(document.getElementById('lonDir').value);
+  const lat = dmsToDecimal(latDeg, latMin, latSec, latDir);
+  const lon = dmsToDecimal(lonDeg, lonMin, lonSec, lonDir);
+  const tz  = parseFloat(document.getElementById('tz').value);
+  const ihtiyat = parseFloat(document.getElementById('ihtiyat').value) || 0;
+  const locName = document.getElementById('loc').value.trim();
+  const kriteria = KRITERIA_KEMENAG;
+  const latLabel = `${latDeg}°${latMin}'${latSec}" ${latDir<0?'LS':'LU'}`;
+  const lonLabel = `${lonDeg}°${lonMin}'${lonSec}" ${lonDir<0?'BB':'BT'}`;
+
+  if(isNaN(lat) || isNaN(lon) || isNaN(tz)){
+    alert('Mohon isi lintang, bujur, dan zona waktu dengan benar.');
+    return;
+  }
+
+  let rows = '';
+  let title = '';
+  let rangeLabel = '';
+
+  if(window._mode === 'masehi'){
+    const year = parseInt(document.getElementById('tahunMasehi').value);
+    const month = parseInt(document.getElementById('bulanMasehi').value);
+    const daysInMonth = new Date(year, month, 0).getDate();
+    title = `Jadwal Sholat — ${BULAN_M[month]} ${year} M`;
+    rangeLabel = `1–${daysInMonth} ${BULAN_M[month]} ${year}`;
+    for(let d=1; d<=daysInMonth; d++){
+      const times = computeDay(year, month, d, lat, lon, tz, ihtiyat, kriteria.fajr, kriteria.isha);
+      const dow = dayOfWeek(year,month,d);
+      const hj = jdToHijri(julianDay(year,month,d));
+      rows += rowHTML(year, month, d, times, dow===5, hj.month===9);
+    }
+  } else {
+    const hyear = parseInt(document.getElementById('tahunHijri').value);
+    const hmonth = parseInt(document.getElementById('bulanHijri').value);
+    const startJD = hijriToJD(hyear, hmonth, 1);
+    const len = hijriMonthLength(hyear, hmonth);
+    title = (hmonth===9? 'Jadwal Imsakiyah Ramadan — ' : 'Jadwal Sholat — ') + `${BULAN_H[hmonth]} ${hyear} H`;
+    const gStart = jdToGregorian(startJD);
+    const gEnd = jdToGregorian(startJD+len-1);
+    rangeLabel = `${gStart.day} ${BULAN_M[gStart.month]} ${gStart.year} – ${gEnd.day} ${BULAN_M[gEnd.month]} ${gEnd.year} M`;
+    for(let i=0; i<len; i++){
+      const jd = startJD + i;
+      const g = jdToGregorian(jd);
+      const times = computeDay(g.year, g.month, g.day, lat, lon, tz, ihtiyat, kriteria.fajr, kriteria.isha);
+      const dow = dayOfWeek(g.year,g.month,g.day);
+      rows += rowHTML(g.year, g.month, g.day, times, dow===5, hmonth===9);
+    }
+  }
+
+  document.getElementById('tbodyHasil').innerHTML = rows;
+
+  document.getElementById('metaArea').innerHTML = `
+    <div class="meta-chip"><div class="k">Jadwal</div><div class="v" style="font-size:13px">${title}</div></div>
+    <div class="meta-chip"><div class="k">Periode</div><div class="v" style="font-size:13px">${rangeLabel}</div></div>
+    <div class="meta-chip"><div class="k">Lokasi</div><div class="v" style="font-size:13px">${locName || 'Tanpa nama'}</div></div>
+    <div class="meta-chip"><div class="k">Lintang</div><div class="v" style="font-size:13px">${latLabel}</div></div>
+    <div class="meta-chip"><div class="k">Bujur</div><div class="v" style="font-size:13px">${lonLabel}</div></div>
+    <div class="meta-chip"><div class="k">Zona Waktu</div><div class="v">UTC ${tz>=0?'+':''}${tz}</div></div>
+    <div class="meta-chip"><div class="k">Ihtiyat</div><div class="v">${ihtiyat} menit</div></div>
+    <div class="meta-chip"><div class="k">Kriteria Sudut</div><div class="v" style="font-size:12px">${kriteria.label}: Subuh −${kriteria.fajr}° • Isya −${kriteria.isha}°</div></div>
+  `;
+
+  document.getElementById('footNote').innerHTML = `
+    <h4>Keterangan &amp; Cakupan Berlakunya Jadwal</h4>
+    <ul>
+      <li><strong>Koordinat acuan:</strong> Lintang ${latLabel} (${lat.toFixed(5)}°), Bujur ${lonLabel} (${lon.toFixed(5)}°), zona UTC${tz>=0?'+':''}${tz}${locName? ' — '+locName : ''}.</li>
+      <li><strong>Kriteria sudut yang dipakai:</strong> ${kriteria.label} — Subuh/Imsak −${kriteria.fajr}°, Isya −${kriteria.isha}°, Terbit/Maghrib −1°, Dhuha +4,5°, faktor bayangan Ashar = 1 (mazhab Syafi'i), sebagaimana ditetapkan resmi oleh Kementerian Agama RI. Lihat penjelasan argumentasi kriteria ini pada bagian "Bekal Ilmu" di atas.</li>
+      <li><strong>Ihtiyat:</strong> ${ihtiyat} menit, ditambahkan pada Subuh, Dzuhur, Ashar, Maghrib, dan Isya (membuat waktu sedikit lebih lambat demi kepastian masuk waktu), serta dikurangkan pada Imsak, Terbit, dan Dhuha (membuat waktu sedikit lebih awal demi kehati-hatian batas akhir), sesuai konvensi Kementerian Agama RI.</li>
+      <li><strong>Cakupan wilayah berlaku:</strong> jadwal ini paling akurat untuk koordinat persis yang diinput. Untuk lokasi lain pada radius kurang lebih 10–20 km dengan kondisi geografis dataran yang relatif sama (selisih bujur dan ketinggian kecil), jadwal ini masih dapat dipakai dengan toleransi selisih sekitar 1–2 menit. Untuk daerah pegunungan, dataran tinggi, pesisir dengan ufuk berbeda, atau radius yang lebih luas, dianjurkan menghitung ulang dengan koordinat spesifik karena selisih dapat mencapai beberapa menit.</li>
+      <li><strong>Tanggal Hijriyah</strong> pada tabel dihasilkan dari konversi hisab tabular (kalender sipil), bersifat estimasi kalender dan dapat berbeda ±1 hari dari hasil rukyat/sidang isbat resmi — khusus penetapan awal Ramadan dan Syawal, rujuk pengumuman resmi Kementerian Agama RI.</li>
+      <li><strong>Tanda (*)</strong> pada sel waktu menunjukkan bahwa pada tanggal tersebut posisi matahari di lintang yang diinput tidak mencapai sudut yang dibutuhkan secara alami (kondisi lintang tinggi/ekstrem), sehingga sistem otomatis memakai pendekatan lintang efektif ±48° sebagai fallback (lihat bagian "Kasus Khusus: Sholat di Wilayah Kutub" pada bagian edukasi).</li>
+    </ul>
+  `;
+
+  document.getElementById('hasil').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ===================== EXPORT TO EXCEL ===================== */
+function exportToExcel(){
+  if(typeof XLSX === 'undefined'){
+    alert('Pustaka export Excel gagal dimuat. Pastikan koneksi internet aktif, lalu muat ulang halaman.');
+    return;
+  }
+  const table = document.getElementById('tabelHasil');
+  if(!document.getElementById('tbodyHasil').querySelector('td.daycell')){
+    alert('Buat jadwal terlebih dahulu sebelum melakukan export.');
+    return;
+  }
+  const wb = XLSX.utils.table_to_book(table, {sheet:'Jadwal Sholat'});
+  const fname = 'jadwal-sholat-' + new Date().toISOString().slice(0,10) + '.xlsx';
+  XLSX.writeFile(wb, fname);
+}
+
+setMode('masehi');
+</script>
+</body>
+</html>
